@@ -251,7 +251,7 @@ const weishanhuConfig = DestinationConfig(
       author: const L10nString(zh: '微山湖湿地风光', ko: '웨이산호 습지 풍경'),
     ),
     PhotoData(
-      url: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=400&auto=format&fit=crop&q=80',
+      url: 'assets/hehua.jpg',
       author: const L10nString(zh: '湖心荷花', ko: '호수 중앙 연꽃'),
     ),
   ],
@@ -442,7 +442,7 @@ const jiudianConfig = DestinationConfig(
   ],
   photoRow2: const [
     PhotoData(
-      url: 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=600&auto=format&fit=crop&q=80',
+      url: 'assets/jiudian.jpeg',
       author: const L10nString(zh: '酒店大堂', ko: '호텔 로비'),
     ),
     PhotoData(
@@ -901,15 +901,26 @@ class _PhotoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final image = Image.network(
-      url,
-      fit: BoxFit.cover,
-      errorBuilder: (_, __, ___) => ShimmerBox(
-        borderRadius: 12,
-        child: const Icon(Icons.broken_image_rounded,
-            color: Color(0xFFCCCCCC), size: 28),
-      ),
-    );
+    final isAsset = url.startsWith('assets/');
+    final image = isAsset
+        ? Image.asset(
+            url,
+            fit: BoxFit.cover,
+            errorBuilder: (_, __, ___) => ShimmerBox(
+              borderRadius: 12,
+              child: const Icon(Icons.broken_image_rounded,
+                  color: Color(0xFFCCCCCC), size: 28),
+            ),
+          )
+        : Image.network(
+            url,
+            fit: BoxFit.cover,
+            errorBuilder: (_, __, ___) => ShimmerBox(
+              borderRadius: 12,
+              child: const Icon(Icons.broken_image_rounded,
+                  color: Color(0xFFCCCCCC), size: 28),
+            ),
+          );
     return ClipRRect(
       borderRadius: BorderRadius.circular(12),
       child: Stack(

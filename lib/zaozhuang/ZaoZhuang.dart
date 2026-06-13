@@ -547,6 +547,21 @@ class _GuideCard extends StatelessWidget {
 
   const _GuideCard({required this.data, required this.locale});
 
+  Widget _buildImage(String url) {
+    if (url.startsWith('assets/')) {
+      return Image.asset(
+        url,
+        fit: BoxFit.cover,
+        errorBuilder: (_, __, ___) => const ShimmerBox(),
+      );
+    }
+    return Image.network(
+      url,
+      fit: BoxFit.cover,
+      errorBuilder: (_, __, ___) => const ShimmerBox(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     int index = int.parse(data['index']!);
@@ -582,11 +597,7 @@ class _GuideCard extends StatelessWidget {
             children: [
               Hero(
                 tag: heroTag,
-                child: Image.network(
-                  data['image']!,
-                  fit: BoxFit.cover,
-                  errorBuilder: (_, __, ___) => const ShimmerBox(),
-                ),
+                child: _buildImage(data['image']!),
               ),
               // 渐变 — 仅底部加深
               Container(
