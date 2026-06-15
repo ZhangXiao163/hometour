@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hometrour/main.dart';
+import 'package:hometrour/zaozhuang/i18n.dart';
 
 void main() {
   testWidgets('home keeps city hub and opens Chongqing as second-level page', (
     tester,
   ) async {
+    AppLocale.instance.setLang('zh');
     await tester.pumpWidget(const MyApp());
 
-    expect(find.text('精选城市'), findsOneWidget);
+    expect(find.text('四个精选城市'), findsOneWidget);
     expect(find.text('枣庄'), findsOneWidget);
     expect(find.text('上海'), findsOneWidget);
     expect(find.text('成都'), findsOneWidget);
@@ -27,20 +29,23 @@ void main() {
     expect(find.text('山城重庆'), findsOneWidget);
   });
 
-  testWidgets('other city cards still show detail sheet', (tester) async {
+  testWidgets('home language toggle remains available after merge', (
+    tester,
+  ) async {
+    AppLocale.instance.setLang('zh');
     await tester.pumpWidget(const MyApp());
 
-    await tester.ensureVisible(find.text('枣庄'));
-    await tester.pumpAndSettle();
-    await tester.tap(find.text('枣庄'));
+    await tester.tap(find.text('한'));
     await tester.pumpAndSettle();
 
-    expect(find.textContaining('台儿庄古城'), findsOneWidget);
+    expect(find.text('4대 추천 도시'), findsOneWidget);
+    expect(find.text('충칭'), findsOneWidget);
   });
 
   testWidgets('Chongqing route detail renders mapped route page', (
     tester,
   ) async {
+    AppLocale.instance.setLang('zh');
     await tester.pumpWidget(const MyApp());
 
     await tester.ensureVisible(find.text('重庆'));

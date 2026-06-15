@@ -1,17 +1,193 @@
-# hometrour
+# 🧳 Hometour — 스마트 여행 가이드 앱
 
-A new Flutter project.
+> **신한대학교** Flutter 기말 프로젝트  
+> **학생**: 장효 (张孝)  
+> **지도교수**: 박진영 (朴振英)  
+> **개발기간**: 2026년 6월
 
-## Getting Started
+---
 
-This project is a starting point for a Flutter application.
+## 📋 프로젝트 소개
 
-A few resources to get you started if this is your first Flutter project:
+Hometour는 중국의 대표 여행 도시를 소개하는 Flutter 기반 모바일 여행 가이드 앱입니다.  
+사용자는 4개의 추천 도시를 탐색하고, 각 도시의 상세 정보를 확인할 수 있습니다.  
+특히 **짜오좡(枣庄)** 을 중심으로 6가지 상세 가이드, 여행기, 호텔 정보, 당일치기 코스 등을 제공합니다.
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+---
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## ✨ 주요 기능
+
+| 기능 | 설명 |
+|------|------|
+| 🌍 **도시 탐색** | 짜오좡, 상하이, 청두, 시안 4대 도시 카드 그리드 |
+| 📖 **상세 가이드 6종** | 짜오좡 종합, 타이얼좡 고성, 웨이산호 습지, 석류원, 호텔, 미식 |
+| 🎬 **동영상 재생** | 가이드 상세 페이지에서 현지 영상 자동 재생 |
+| 🌐 **중·한 이중 언어** | 앱 내에서 실시간 언어 전환 (중국어 ↔ 한국어) |
+| ✍️ **여행기 3편** | 일기 형식의 풍부한 여행기, 상세 페이지 포함 |
+| 🏨 **호텔 리스트** | 지역별(고성 내, 시내, 호숫가) 8개 호텔 정보 |
+| 🚶 **당일치기 코스** | 3가지 테마별 코스, 시간대별 타임라인 |
+| 🏰 **명소 리스트** | 6개 주요 명소 카드, 평점 및 태그 표시 |
+| 🎨 **애니메이션** | 페이지 전환, 카드 입장 애니메이션, 플로팅 효과, Hero 전환, Shimmer 로딩 |
+| 🔘 **반응형 UI** | 그리드/리스트 적응형 레이아웃 |
+
+---
+
+## 🛠️ 기술 스택
+
+- **Framework**: Flutter 3.x
+- **Language**: Dart
+- **주요 패키지**:
+  - `video_player` — 동영상 재생
+  - 그 외 Material Design 기본 위젯 중심
+
+---
+
+## 📁 프로젝트 구조
+
+```
+lib/
+├── main.dart                          # 앱 진입점 & 메인 페이지
+└── zaozhuang/
+    ├── i18n.dart                      # 언어 상태 관리 & 번역 데이터
+    ├── animations.dart                # 애니메이션 유틸
+    ├── ZaoZhuang.dart                 # 짜오좡 홈페이지
+    ├── destination_page.dart          # 공통 가이드 상세 페이지 & 6개 가이드 설정
+    ├── scenic_spots_page.dart         # 명소 리스트 페이지
+    ├── travel_notes_page.dart         # 여행기 리스트 & 상세 페이지
+    ├── hotel_list_page.dart           # 호텔 리스트 페이지
+    └── day_tour_page.dart             # 당일치기 코스 페이지
+assets/
+├── img1.jpg ~ img4.jpg                # 메인 도시 카드 이미지
+├── zaozhuang.jpg / gucheng.jpg / ...  # 각 가이드 대표 이미지
+├── zaozhuang.mp4 / taierzhuang.mp4    # 로컬 동영상
+└── ...
+```
+
+---
+
+## 🚀 실행 방법
+
+```bash
+# 의존성 설치
+flutter pub get
+
+# 실행
+flutter run
+```
+
+---
+
+## 📸 화면 구성
+
+| 페이지 | 내용 |
+|--------|------|
+| **메인 페이지** | 4개 도시 카드, 검색창, 언어 전환 버튼 |
+| **짜오좡 홈** | 카테고리 바, 가이드 그리드, 인기 질문, 호텔 추천 카드 |
+| **가이드 상세** | 동영상, 도시 개요, 교통 안내, 추천 코스, 팁 |
+| **여행기** | 저자 정보, Day 별 본문, 사진, 좋아요/댓글 수 |
+| **호텔 리스트** | 지역 그룹별 호텔 카드, 평점, 가격 표시 |
+| **당일치기** | 시간대별 타임라인, 경비/교통 정보, 접기/펼치기 |
+| **명소 리스트** | 주요 명소, 태그(필수/자연/문화), 평점 |
+
+---
+
+> *본 프로젝트는 신한대학교 Flutter 강의의 기말 과제로 제작되었습니다.*
+
+---
+
+---
+
+# 🧳 Hometour — 智能旅游指南应用
+
+> **信韩大学** Flutter 期末设计  
+> **学生**: 张孝  
+> **指导教授**: 朴振英  
+> **开发周期**: 2026年6月
+
+---
+
+## 📋 项目简介
+
+Hometour 是一款基于 Flutter 的移动端旅游指南应用，介绍中国代表性旅游城市。  
+用户可浏览 4 个精选城市，查看各城市的详细信息。  
+以 **枣庄** 为重点，提供 6 种详细攻略、游记、酒店信息、一日游路线等。
+
+---
+
+## ✨ 主要功能
+
+| 功能 | 说明 |
+|------|------|
+| 🌍 **城市探索** | 枣庄、上海、成都、西安 4 大城市卡片网格 |
+| 📖 **6 种详细攻略** | 枣庄全攻略、台儿庄古城、微山湖湿地、石榴园、酒店住宿、美食地图 |
+| 🎬 **视频播放** | 攻略详情页内嵌本地视频，进入自动播放 |
+| 🌐 **中韩双语** | 应用内实时语言切换（中文 ↔ 韩文） |
+| ✍️ **3 篇游记** | 日记体丰富游记，含详情页 |
+| 🏨 **酒店列表** | 按区域分组（古城内、市区、湖畔）共 8 家酒店 |
+| 🚶 **一日游路线** | 3 条主题路线，时间轴格式，可展开/收起 |
+| 🏰 **景点列表** | 6 个主要景点卡片，含评分和分类标签 |
+| 🎨 **动画效果** | 页面转场、卡片入场交错动画、呼吸浮动、Hero 过渡、Shimmer 骨架屏 |
+| 🔘 **自适应布局** | 网格/列表自适应铺满 |
+
+---
+
+## 🛠️ 技术栈
+
+- **框架**: Flutter 3.x
+- **语言**: Dart
+- **主要依赖**:
+  - `video_player` — 视频播放
+  - 其余以 Material Design 原生组件为主
+
+---
+
+## 📁 项目结构
+
+```
+lib/
+├── main.dart                          # 应用入口 & 主页
+└── zaozhuang/
+    ├── i18n.dart                      # 语言状态管理 & 翻译数据
+    ├── animations.dart                # 动画工具（入场、按压、骨架屏、浮动等）
+    ├── ZaoZhuang.dart                 # 枣庄主页
+    ├── destination_page.dart          # 通用攻略详情页 & 6篇攻略配置
+    ├── scenic_spots_page.dart         # 景点列表页
+    ├── travel_notes_page.dart         # 游记列表 & 详情页
+    ├── hotel_list_page.dart           # 酒店列表页
+    └── day_tour_page.dart             # 一日游路线页
+assets/
+├── img1.jpg ~ img4.jpg                # 主页面城市卡片图片
+├── zaozhuang.jpg / gucheng.jpg / ...  # 各攻略头图
+├── zaozhuang.mp4 / taierzhuang.mp4    # 本地视频
+└── ...
+```
+
+---
+
+## 🚀 运行方式
+
+```bash
+# 安装依赖
+flutter pub get
+
+# 运行
+flutter run
+```
+
+---
+
+## 📸 页面结构
+
+| 页面 | 内容 |
+|------|------|
+| **主页** | 4 城市卡片、搜索栏、语言切换按钮 |
+| **枣庄主页** | 分类栏、攻略网格、热门问题、住宿推荐卡片 |
+| **攻略详情** | 视频、城市概况、交通指南、推荐路线、贴士 |
+| **游记** | 作者信息、分 Day 正文、配图、点赞/评论数 |
+| **酒店列表** | 区域分组酒店卡片、评分、价格 |
+| **一日游** | 分时段时间轴、费用/交通信息、展开/收起 |
+| **景点列表** | 主要景点、标签（必去/自然/文化）、评分 |
+
+---
+
+> *本项目为信韩大学 Flutter 课程期末设计作品。*
