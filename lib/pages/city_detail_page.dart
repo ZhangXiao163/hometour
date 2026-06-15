@@ -32,7 +32,7 @@ class _CityDetailPageState extends State<CityDetailPage>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 4, vsync: this, initialIndex: 3);
+    _tabController = TabController(length: 4, vsync: this, initialIndex: 0);
     _tabController.addListener(() {
       if (!_tabController.indexIsChanging) {
         setState(() {}); // 刷新 hero 标题

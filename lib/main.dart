@@ -6,8 +6,8 @@ import 'package:hometrour/zaozhuang/i18n.dart';
 import 'package:hometrour/services/l10n.dart';
 
 import 'models/city_data.dart';
-
 import 'pages/chongqing_travel_page.dart';
+import 'pages/nantong_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -77,12 +77,12 @@ List<CityData> _buildCities(String l) => [
   ),
   CityData(
     id: 4,
-    name: I18n.cityNameXian(l),
+    name: I18n.cityNameNantong(l),
     score: '4.9',
-    desc: I18n.cityDescXian(l),
-    tags: [l == 'ko' ? '대안탑' : '大雁塔', l == 'ko' ? '병마용' : '兵马俑'],
-    image: 'assets/img4.jpg',
-    detail: I18n.cityDetailXian(l),
+    desc: I18n.cityDescNantong(l),
+    tags: [l == 'ko' ? '하오허 야경' : '濠河夜景', l == 'ko' ? '낭산 풍경구' : '狼山风景区'],
+    image: 'assets/nantong_images/nantong.jpg',
+    detail: I18n.cityDetailNantong(l),
   ),
   CityData(
     id: 5,
@@ -311,6 +311,13 @@ class TravelHomePage extends StatelessWidget {
                 initialLocale: locale,
                 child: const CityDetailPage(city: hezeCity),
               ),
+            ),
+          );
+        } else if (city.id == 4) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => const NantongArticlePage(),
             ),
           );
         } else if (city.id == 5) {

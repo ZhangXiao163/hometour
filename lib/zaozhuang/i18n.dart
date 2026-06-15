@@ -71,6 +71,12 @@ class I18n {
   static String cityDetailHeze(String l) => l == 'ko'
       ? '허쩌는 고대 조주(曹州)로 불렸으며, "중국 모란의 수도"로 유명합니다. 조주 고성, 황하 풍물, 모란 꽃밭이 어우러진 산둥성 서남부의 역사 문화 도시입니다.'
       : '菏泽古称曹州，是著名的"中国牡丹之都"。曹州古城、黄河风物、牡丹花海交相辉映，是山东西南部的历史文化名城。';
+  static String cityNameNantong(String l) => l == 'ko' ? '난퉁   김가호' : '南通    김가호';
+  static String cityDescNantong(String l) =>
+      l == 'ko' ? '중국 근대 제1성, 강해 문화의 고장' : '中国近代第一城，江海文化之乡';
+  static String cityDetailNantong(String l) => l == 'ko'
+      ? '난퉁은 장쑤성에 위치하며 창강 삼각주 북쪽에 자리한 역사 문화 도시입니다. 장젠 선생이 중국 근대 제1성을 건설한 곳으로 하오허 야경, 낭산 풍경구, 당자 고진 등이 유명합니다.'
+      : '南通位于江苏省，地处长江三角洲北部，是著名的历史文化名城。张謇先生在此缔造了中国近代第一城，濠河夜景、狼山风景区、唐闸古镇等景点闻名遐迩。';
 
   static String cityNameShanghai(String l) => l == 'ko' ? '상하이' : '上海';
   static String cityDescShanghai(String l) =>
