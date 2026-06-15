@@ -5,7 +5,7 @@ class AppLocale extends ChangeNotifier {
   static final AppLocale instance = AppLocale._();
   AppLocale._();
 
-  String _lang = 'ko';
+  String _lang = 'zh';
   String get lang => _lang;
   bool get isZh => _lang == 'zh';
   bool get isKo => _lang == 'ko';
@@ -58,12 +58,19 @@ class I18n {
 
   // ── 城市数据 ────────────────────────────────────────────────
   static String cityNameZaozhuang(String l) =>
-      l == 'ko' ? '짜오좡' : '枣庄';
+      l == 'ko' ? '짜오좡     장효' : '枣庄    장효';
   static String cityDescZaozhuang(String l) =>
       l == 'ko' ? '고대 운하의 강변, 루난 수향 문화' : '古运河畔 鲁南水乡文化';
   static String cityDetailZaozhuang(String l) => l == 'ko'
       ? '짜오좡은 산둥성 남부에 위치한 유명한 타이얼좡 고성의 소재지입니다. 중국에서 가장 잘 보존된 고대 운하 문화 유적지가 있으며, 수로가 교차하고 고풍스러운 운치가 있습니다. 웨이산호 습지는 경치가 아름답고 봄에는 연꽃이 만발하여 조류 관찰과 휴식에 최적의 장소입니다.'
       : '枣庄位于山东南部，是著名的台儿庄古城所在地。这里有中国保存最完好的古运河文化遗址，水巷交错，古韵悠然。微山湖湿地风光旖旎，春季荷花盛开，是观鸟和休闲的绝佳去处。';
+
+  static String cityNameHeze(String l) => l == 'ko' ? '허쩌   청이신  ' : '菏泽  청이신 ';
+  static String cityDescHeze(String l) =>
+      l == 'ko' ? '모란의 수도, 황하가 산둥에 닿는 첫 도시' : '牡丹之都 黄河入鲁第一站';
+  static String cityDetailHeze(String l) => l == 'ko'
+      ? '허쩌는 고대 조주(曹州)로 불렸으며, "중국 모란의 수도"로 유명합니다. 조주 고성, 황하 풍물, 모란 꽃밭이 어우러진 산둥성 서남부의 역사 문화 도시입니다.'
+      : '菏泽古称曹州，是著名的"中国牡丹之都"。曹州古城、黄河风物、牡丹花海交相辉映，是山东西南部的历史文化名城。';
 
   static String cityNameShanghai(String l) => l == 'ko' ? '상하이' : '上海';
   static String cityDescShanghai(String l) =>

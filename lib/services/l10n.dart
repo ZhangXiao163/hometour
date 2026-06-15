@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hometrour/zaozhuang/i18n.dart';
 
 /// 支持的语言
 enum AppLanguage {
@@ -24,6 +25,11 @@ class LanguageProvider extends ChangeNotifier {
   void setLanguage(AppLanguage lang) {
     if (_lang == lang) return;
     _lang = lang;
+    // 同步到全局 AppLocale
+    final locale = lang == AppLanguage.zh ? 'zh' : 'ko';
+    if (AppLocale.instance.lang != locale) {
+      AppLocale.instance.setLang(locale);
+    }
     notifyListeners();
   }
 
@@ -59,14 +65,22 @@ class _LanguageScope extends InheritedWidget {
 /// 包装 MaterialApp 的语言提供者
 class LanguageWrapper extends StatefulWidget {
   final Widget child;
-  const LanguageWrapper({required this.child, super.key});
+  final String initialLocale;
+  const LanguageWrapper({
+    required this.child,
+    this.initialLocale = 'zh',
+    super.key,
+  });
 
   @override
   State<LanguageWrapper> createState() => _LanguageWrapperState();
 }
 
 class _LanguageWrapperState extends State<LanguageWrapper> {
-  final LanguageProvider _provider = LanguageProvider();
+  late final LanguageProvider _provider = LanguageProvider()
+    ..setLanguage(
+      widget.initialLocale == 'ko' ? AppLanguage.ko : AppLanguage.zh,
+    );
 
   @override
   Widget build(BuildContext context) {
