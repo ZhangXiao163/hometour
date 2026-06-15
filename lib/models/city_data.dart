@@ -2,6 +2,9 @@
 // 数据模型
 // ══════════════════════════════════════════════════════════════════
 
+/// 缩略图风格枚举
+enum ThumbStyle { peony, history, nature, culture }
+
 /// 旅游景点
 class TouristSpot {
   final String name;
@@ -10,6 +13,7 @@ class TouristSpot {
   final String location;
   final String description;
   final String highlight;
+  final ThumbStyle thumbStyle;
   const TouristSpot({
     required this.name,
     required this.type,
@@ -17,6 +21,7 @@ class TouristSpot {
     required this.location,
     required this.description,
     required this.highlight,
+    this.thumbStyle = ThumbStyle.peony,
   });
 }
 
@@ -117,6 +122,7 @@ const CityData hezeCity = CityData(
       description:
           '世界面积最大、品种最多的牡丹园，占地1600亩，牡丹品种1280余个、总量80万株。园内有国花魂雕塑、国花馆（牡丹博物馆）、观花楼、天香阁等39个景点。每年4月盛花期，九大色系十大花型竞相绽放，蔚为壮观。',
       highlight: '4月中旬盛花期，千亩花海同时绽放',
+      thumbStyle: ThumbStyle.peony,
     ),
     TouristSpot(
       name: '水浒好汉城',
@@ -126,6 +132,7 @@ const CityData hezeCity = CityData(
       description:
           '以水浒文化为主题的大型景区，占地600余亩，拥有36座院落、72个景观、108个景点。可观看水浒情景剧实景演出、体验传统武术表演、穿汉服拍照打卡，沉浸式感受"梁山好汉"的侠义世界。',
       highlight: '实景水浒情景剧 + 武术表演',
+      thumbStyle: ThumbStyle.history,
     ),
     TouristSpot(
       name: '孙膑旅游城·亿城寺',
@@ -135,6 +142,7 @@ const CityData hezeCity = CityData(
       description:
           '全国最大的孙膑文化主题园区，集兵家文化、佛教文化于一体。主要景点有孙膑纪念馆、亿城寺、将军碑林等，是了解战国军事家孙膑"围魏救赵"等兵家智慧的最佳去处。',
       highlight: '全国最大孙膑文化主题园',
+      thumbStyle: ThumbStyle.history,
     ),
     TouristSpot(
       name: '单县浮龙湖生态旅游区',
@@ -144,6 +152,7 @@ const CityData hezeCity = CityData(
       description:
           '被誉为"江北西湖""故道明珠"，水面3万多亩，是鲁西南最大的生态湖泊。可乘船游湖、环湖骑行、观鸟摄影，湖光山色四季如画，是休闲度假的理想之地。',
       highlight: '3万亩水面，可乘船、骑行、观鸟',
+      thumbStyle: ThumbStyle.nature,
     ),
     TouristSpot(
       name: '曹县黄河故道湿地风景区',
@@ -153,6 +162,7 @@ const CityData hezeCity = CityData(
       description:
           '以黄河故道湿地为特色，拥有万亩荷花、万亩稻田、万亩湿地的壮丽景观。八大主题景点涵盖生态观光、科普教育、农事体验，夏季荷花盛开时节尤为壮观。',
       highlight: '万亩荷花，夏季最佳',
+      thumbStyle: ThumbStyle.nature,
     ),
     TouristSpot(
       name: '老城曹州',
@@ -162,6 +172,7 @@ const CityData hezeCity = CityData(
       description:
           '菏泽老城记忆的文化街区，省级旅游休闲街区。集美食小吃、非遗展示、文化表演、夜景灯光于一体。曹州芝麻饼、面塑等非遗技艺可现场体验，夜晚灯光璀璨，适合休闲漫步。',
       highlight: '省级旅游休闲街区，非遗体验',
+      thumbStyle: ThumbStyle.history,
     ),
     TouristSpot(
       name: '前王庄石头寨',
@@ -171,6 +182,7 @@ const CityData hezeCity = CityData(
       description:
           '拥有500多年历史的国家级传统古村落，现存100多栋明清时期石头建筑。石墙石瓦、石碾石磨，宛若一座石头的博物馆，是摄影爱好者和古建筑迷的天堂。',
       highlight: '500年明清石头古村落',
+      thumbStyle: ThumbStyle.history,
     ),
     TouristSpot(
       name: '巨野县书画院',
@@ -180,6 +192,7 @@ const CityData hezeCity = CityData(
       description:
           '工笔牡丹画的发源地，免费向公众开放。可近距离观赏工笔牡丹画的创作过程，了解菏泽书画文化，购买牡丹主题文创产品作为伴手礼。',
       highlight: '工笔牡丹画发源地，免费参观',
+      thumbStyle: ThumbStyle.culture,
     ),
   ],
 

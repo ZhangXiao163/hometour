@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hometrour/zaozhuang/animations.dart';
 
 /// ══════════════════════════════════════════════════════════════════════
 /// 设计系统颜色 —— 从设计稿提取
@@ -48,6 +49,12 @@ class GallerySection extends StatelessWidget {
   final Color? mainOverlayStart;
   final Color? mainOverlayMid;
   final Color? mainOverlayEnd;
+  final Color? sideTopStart;
+  final Color? sideTopMid;
+  final Color? sideTopEnd;
+  final Color? sideBottomStart;
+  final Color? sideBottomMid;
+  final Color? sideBottomEnd;
 
   const GallerySection({
     super.key,
@@ -58,6 +65,12 @@ class GallerySection extends StatelessWidget {
     this.mainOverlayStart,
     this.mainOverlayMid,
     this.mainOverlayEnd,
+    this.sideTopStart,
+    this.sideTopMid,
+    this.sideTopEnd,
+    this.sideBottomStart,
+    this.sideBottomMid,
+    this.sideBottomEnd,
   });
 
   @override
@@ -85,6 +98,9 @@ class GallerySection extends StatelessWidget {
                   child: _SidePhoto(
                     label: sideTopLabel,
                     isCity: true,
+                    startColor: sideTopStart,
+                    midColor: sideTopMid,
+                    endColor: sideTopEnd,
                   ),
                 ),
                 const SizedBox(height: 10),
@@ -92,6 +108,9 @@ class GallerySection extends StatelessWidget {
                   child: _SidePhoto(
                     label: sideBottomLabel,
                     isCity: false,
+                    startColor: sideBottomStart,
+                    midColor: sideBottomMid,
+                    endColor: sideBottomEnd,
                   ),
                 ),
               ],
@@ -252,17 +271,25 @@ class _MainPhoto extends StatelessWidget {
 class _SidePhoto extends StatelessWidget {
   final String label;
   final bool isCity;
+  final Color? startColor;
+  final Color? midColor;
+  final Color? endColor;
 
   const _SidePhoto({
     required this.label,
     required this.isCity,
+    this.startColor,
+    this.midColor,
+    this.endColor,
   });
 
   @override
   Widget build(BuildContext context) {
-    final colors = isCity
-        ? [AppColors.photoCityStart, AppColors.photoCityMid, AppColors.photoCityEnd]
-        : [AppColors.photoRiverStart, AppColors.photoRiverMid, AppColors.photoRiverEnd];
+    final colors = (startColor != null && midColor != null && endColor != null)
+        ? [startColor!, midColor!, endColor!]
+        : isCity
+            ? [AppColors.photoCityStart, AppColors.photoCityMid, AppColors.photoCityEnd]
+            : [AppColors.photoRiverStart, AppColors.photoRiverMid, AppColors.photoRiverEnd];
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(20),
@@ -389,7 +416,7 @@ class _StatCard extends StatelessWidget {
     );
 
     if (data.onTap != null) {
-      return GestureDetector(
+      return PressScale(
         onTap: data.onTap,
         child: card,
       );

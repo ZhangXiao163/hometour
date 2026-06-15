@@ -7,8 +7,8 @@ const Color _primary = Color(0xFFE6A800);
 /// ── 一日游数据 ────────────────────────────────────────────────────
 class _TourStep {
   final String time;
-  final String title;
-  final String desc;
+  final String Function(String l) title;
+  final String Function(String l) desc;
   final IconData icon;
 
   const _TourStep({
@@ -56,13 +56,13 @@ List<_DayTour> _tours(String l) => [
             ? '편안한 운동화 착용 권장, 하루 종일 걸어야 함. 저녁에는 반드시 배를 타고 야간 유람을 즐기세요!'
             : '建议穿舒适的平底鞋，全天步行较多。晚上一定要坐摇橹船夜游！',
         color: const Color(0xFFE85454),
-        steps: const [
-          _TourStep(time: '08:00', title: '古城东门入城', desc: '在城门外的早餐铺来一碗羊肉汤+烧饼', icon: Icons.login_rounded),
-          _TourStep(time: '09:00', title: '参将署 & 天后宫', desc: '看明清衙门文化与闽南木雕', icon: Icons.account_balance_rounded),
-          _TourStep(time: '11:30', title: '船形街午餐', desc: '推荐运河鲤鱼、辣子鸡', icon: Icons.restaurant_rounded),
-          _TourStep(time: '14:00', title: '大战纪念馆', desc: '了解台儿庄战役历史', icon: Icons.museum_rounded),
-          _TourStep(time: '16:30', title: '摇橹船游内河', desc: '听船娘唱鲁南小调', icon: Icons.sailing_rounded),
-          _TourStep(time: '19:00', title: '夜游古城灯会', desc: '打铁花表演，红灯笼映水巷', icon: Icons.nightlight_rounded),
+        steps: [
+          _TourStep(time: '08:00', title: I18n.tour1Step1Title, desc: I18n.tour1Step1Desc, icon: Icons.login_rounded),
+          _TourStep(time: '09:00', title: I18n.tour1Step2Title, desc: I18n.tour1Step2Desc, icon: Icons.account_balance_rounded),
+          _TourStep(time: '11:30', title: I18n.tour1Step3Title, desc: I18n.tour1Step3Desc, icon: Icons.restaurant_rounded),
+          _TourStep(time: '14:00', title: I18n.tour1Step4Title, desc: I18n.tour1Step4Desc, icon: Icons.museum_rounded),
+          _TourStep(time: '16:30', title: I18n.tour1Step5Title, desc: I18n.tour1Step5Desc, icon: Icons.sailing_rounded),
+          _TourStep(time: '19:00', title: I18n.tour1Step6Title, desc: I18n.tour1Step6Desc, icon: Icons.nightlight_rounded),
         ],
       ),
       _DayTour(
@@ -77,13 +77,13 @@ List<_DayTour> _tours(String l) => [
             ? '망원경과 방충제를 꼭 챙기세요! 아침 해 뜰 무렵이 조류 관찰 최적기입니다.'
             : '早起必备望远镜和防蚊喷雾！清晨日出前后是观鸟最佳时段。',
         color: const Color(0xFF3CBD6E),
-        steps: const [
-          _TourStep(time: '06:30', title: '湿地公园入口集合', desc: '趁日出前抵达观鸟塔', icon: Icons.wb_twilight_rounded),
-          _TourStep(time: '07:00', title: '观鸟塔拍摄', desc: '长焦镜头抓拍白鹭、苍鹭', icon: Icons.photo_camera_rounded),
-          _TourStep(time: '09:30', title: '荷花精品园', desc: '万亩荷花盛开，接天莲叶无穷碧', icon: Icons.local_florist_rounded),
-          _TourStep(time: '12:00', title: '渔家全鱼宴', desc: '现捕现做的鲜美湖鱼', icon: Icons.set_meal_rounded),
-          _TourStep(time: '14:00', title: '游船探芦苇迷宫', desc: '深入芦苇荡寻鸟', icon: Icons.directions_boat_rounded),
-          _TourStep(time: '16:30', title: '铁道游击队纪念馆', desc: '了解红色历史', icon: Icons.flag_rounded),
+        steps: [
+          _TourStep(time: '06:30', title: I18n.tour2Step1Title, desc: I18n.tour2Step1Desc, icon: Icons.wb_twilight_rounded),
+          _TourStep(time: '07:00', title: I18n.tour2Step2Title, desc: I18n.tour2Step2Desc, icon: Icons.photo_camera_rounded),
+          _TourStep(time: '09:30', title: I18n.tour2Step3Title, desc: I18n.tour2Step3Desc, icon: Icons.local_florist_rounded),
+          _TourStep(time: '12:00', title: I18n.tour2Step4Title, desc: I18n.tour2Step4Desc, icon: Icons.set_meal_rounded),
+          _TourStep(time: '14:00', title: I18n.tour2Step5Title, desc: I18n.tour2Step5Desc, icon: Icons.directions_boat_rounded),
+          _TourStep(time: '16:30', title: I18n.tour2Step6Title, desc: I18n.tour2Step6Desc, icon: Icons.flag_rounded),
         ],
       ),
       _DayTour(
@@ -98,13 +98,13 @@ List<_DayTour> _tours(String l) => [
             ? '공복으로 출발하세요! 매운 음식을 못 드시는 분은 미리 "살짝 맵게"라고 요청하세요.'
             : '空腹出发！不能吃辣的记得跟店家说"微辣"。',
         color: const Color(0xFFF08040),
-        steps: const [
-          _TourStep(time: '08:00', title: '西集羊肉汤', desc: '枣庄人的第一碗汤，清晨5点开熬', icon: Icons.soup_kitchen_rounded),
-          _TourStep(time: '10:00', title: '菜煎饼探店', desc: '路边小摊最地道，外酥里嫩', icon: Icons.breakfast_dining_rounded),
-          _TourStep(time: '12:00', title: '辣子鸡午餐', desc: '枣庄辣子鸡 + 石榴叶茶', icon: Icons.local_fire_department_rounded),
-          _TourStep(time: '14:30', title: '特产采购', desc: '石榴酒、山亭花椒、咸鸭蛋', icon: Icons.shopping_bag_rounded),
-          _TourStep(time: '17:30', title: '台儿庄美食街', desc: '运河鲤鱼、煎饼卷大葱', icon: Icons.food_bank_rounded),
-          _TourStep(time: '19:30', title: '夜市烧烤', desc: '古城夜市烧烤配石榴酒', icon: Icons.nightlife_rounded),
+        steps: [
+          _TourStep(time: '08:00', title: I18n.tour3Step1Title, desc: I18n.tour3Step1Desc, icon: Icons.soup_kitchen_rounded),
+          _TourStep(time: '10:00', title: I18n.tour3Step2Title, desc: I18n.tour3Step2Desc, icon: Icons.breakfast_dining_rounded),
+          _TourStep(time: '12:00', title: I18n.tour3Step3Title, desc: I18n.tour3Step3Desc, icon: Icons.local_fire_department_rounded),
+          _TourStep(time: '14:30', title: I18n.tour3Step4Title, desc: I18n.tour3Step4Desc, icon: Icons.shopping_bag_rounded),
+          _TourStep(time: '17:30', title: I18n.tour3Step5Title, desc: I18n.tour3Step5Desc, icon: Icons.food_bank_rounded),
+          _TourStep(time: '19:30', title: I18n.tour3Step6Title, desc: I18n.tour3Step6Desc, icon: Icons.nightlife_rounded),
         ],
       ),
     ];
@@ -299,6 +299,7 @@ class _TourCardState extends State<_TourCard> {
                   color: t.color,
                   isFirst: i == 0,
                   isLast: i == (_expanded ? t.steps.length - 1 : 2),
+                  locale: l,
                 ),
               ),
             ),
@@ -371,12 +372,14 @@ class _TimelineItem extends StatelessWidget {
   final Color color;
   final bool isFirst;
   final bool isLast;
+  final String locale;
 
   const _TimelineItem({
     required this.step,
     required this.color,
     required this.isFirst,
     required this.isLast,
+    required this.locale,
   });
 
   @override
@@ -432,7 +435,7 @@ class _TimelineItem extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          step.title,
+                          step.title(locale),
                           style: const TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w700,
@@ -440,7 +443,7 @@ class _TimelineItem extends StatelessWidget {
                         ),
                         const SizedBox(height: 2),
                         Text(
-                          step.desc,
+                          step.desc(locale),
                           style: const TextStyle(
                               fontSize: 12, color: Color(0xFF909090)),
                         ),

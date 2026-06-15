@@ -330,6 +330,9 @@ class TravelHomePage extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(18),
+          border: city.id == 2
+              ? Border.all(color: const Color(0x66B83D62), width: 2)
+              : null,
           image: DecorationImage(
             image: AssetImage(city.image),
             fit: BoxFit.cover,
@@ -402,14 +405,28 @@ class TravelHomePage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(
-                      city.name,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 19,
-                        fontWeight: FontWeight.w800,
-                        letterSpacing: 0.5,
-                      ),
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        if (city.id == 2)
+                          const Padding(
+                            padding: EdgeInsets.only(right: 5),
+                            child: Icon(
+                              Icons.local_florist,
+                              color: Color(0xFFFFB3C0),
+                              size: 18,
+                            ),
+                          ),
+                        Text(
+                          city.name,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 19,
+                            fontWeight: FontWeight.w800,
+                            letterSpacing: 0.5,
+                          ),
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 3),
                     Text(

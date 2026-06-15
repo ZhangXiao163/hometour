@@ -332,6 +332,89 @@ class I18n {
   static String tour3Desc(String l) => l == 'ko'
       ? '짜오좡의 대표 음식을 하루 만에 모두 맛보는 미식 여행'
       : '一天吃遍枣庄特色美食，从早到晚不停筷';
+
+  // ── Tour 1: 古城文化一日游 步骤 ──────────────────────────────
+  static String tour1Step1Title(String l) =>
+      l == 'ko' ? '고성 동문 입성' : '古城东门入城';
+  static String tour1Step1Desc(String l) => l == 'ko'
+      ? '성문 밖 아침식사 포장마차에서 양고기 수프와 전병 즐기기'
+      : '在城门外的早餐铺来一碗羊肉汤+烧饼';
+  static String tour1Step2Title(String l) =>
+      l == 'ko' ? '참장서 & 천후궁' : '参将署 & 天后宫';
+  static String tour1Step2Desc(String l) =>
+      l == 'ko' ? '명청 관아 문화와 민난 목각 감상' : '看明清衙门文化与闽南木雕';
+  static String tour1Step3Title(String l) =>
+      l == 'ko' ? '선형 거리 점심' : '船形街午餐';
+  static String tour1Step3Desc(String l) =>
+      l == 'ko' ? '운하 잉어, 매운 닭 추천' : '推荐运河鲤鱼、辣子鸡';
+  static String tour1Step4Title(String l) =>
+      l == 'ko' ? '전쟁 기념관' : '大战纪念馆';
+  static String tour1Step4Desc(String l) =>
+      l == 'ko' ? '타이얼좡 전투 역사 알아보기' : '了解台儿庄战役历史';
+  static String tour1Step5Title(String l) =>
+      l == 'ko' ? '노 젓는 배 내하 유람' : '摇橹船游内河';
+  static String tour1Step5Desc(String l) =>
+      l == 'ko' ? '뱃사공의 루난 민요 듣기' : '听船娘唱鲁南小调';
+  static String tour1Step6Title(String l) =>
+      l == 'ko' ? '고성 야간 등불 축제' : '夜游古城灯会';
+  static String tour1Step6Desc(String l) => l == 'ko'
+      ? '철쭉 불꽃놀이, 홍등 불빛 비친 수로'
+      : '打铁花表演，红灯笼映水巷';
+
+  // ── Tour 2: 自然生态一日游 步骤 ──────────────────────────────
+  static String tour2Step1Title(String l) =>
+      l == 'ko' ? '습지공원 입구 집합' : '湿地公园入口集合';
+  static String tour2Step1Desc(String l) =>
+      l == 'ko' ? '해 뜨기 전 조류 관찰탑 도착' : '趁日出前抵达观鸟塔';
+  static String tour2Step2Title(String l) =>
+      l == 'ko' ? '조류 관찰탑 촬영' : '观鸟塔拍摄';
+  static String tour2Step2Desc(String l) =>
+      l == 'ko' ? '망원 렌즈로 백로, 왜가리 촬영' : '长焦镜头抓拍白鹭、苍鹭';
+  static String tour2Step3Title(String l) =>
+      l == 'ko' ? '연꽃 명품 정원' : '荷花精品园';
+  static String tour2Step3Desc(String l) => l == 'ko'
+      ? '만 무의 연꽃 만개, 하늘 끝까지 이어진 푸른 연잎'
+      : '万亩荷花盛开，接天莲叶无穷碧';
+  static String tour2Step4Title(String l) =>
+      l == 'ko' ? '어부 풀코스 생선 요리' : '渔家全鱼宴';
+  static String tour2Step4Desc(String l) =>
+      l == 'ko' ? '갓 잡아 바로 요리한 신선한 호수 생선' : '现捕现做的鲜美湖鱼';
+  static String tour2Step5Title(String l) =>
+      l == 'ko' ? '유람선 갈대 미로 탐험' : '游船探芦苇迷宫';
+  static String tour2Step5Desc(String l) =>
+      l == 'ko' ? '갈대 숲 깊이 들어가 새 찾기' : '深入芦苇荡寻鸟';
+  static String tour2Step6Title(String l) =>
+      l == 'ko' ? '철도유격대 기념관' : '铁道游击队纪念馆';
+  static String tour2Step6Desc(String l) =>
+      l == 'ko' ? '혁명 역사 알아보기' : '了解红色历史';
+
+  // ── Tour 3: 美食探店一日游 步骤 ──────────────────────────────
+  static String tour3Step1Title(String l) =>
+      l == 'ko' ? '시지 양고기 수프' : '西集羊肉汤';
+  static String tour3Step1Desc(String l) => l == 'ko'
+      ? '짜오좡 사람들의 첫 수프, 새벽 5시부터 끓임'
+      : '枣庄人的第一碗汤，清晨5点开熬';
+  static String tour3Step2Title(String l) =>
+      l == 'ko' ? '채소 전병 맛집 탐방' : '菜煎饼探店';
+  static String tour3Step2Desc(String l) =>
+      l == 'ko' ? '길가 노점이 가장 정통, 겉바속촉' : '路边小摊最地道，外酥里嫩';
+  static String tour3Step3Title(String l) =>
+      l == 'ko' ? '매운 닭 점심' : '辣子鸡午餐';
+  static String tour3Step3Desc(String l) =>
+      l == 'ko' ? '짜오좡 매운 닭 + 석류잎 차' : '枣庄辣子鸡 + 石榴叶茶';
+  static String tour3Step4Title(String l) =>
+      l == 'ko' ? '특산품 쇼핑' : '特产采购';
+  static String tour3Step4Desc(String l) =>
+      l == 'ko' ? '석류주, 산팅 화자오, 염지 오리알' : '石榴酒、山亭花椒、咸鸭蛋';
+  static String tour3Step5Title(String l) =>
+      l == 'ko' ? '타이얼좡 미식 거리' : '台儿庄美食街';
+  static String tour3Step5Desc(String l) =>
+      l == 'ko' ? '운하 잉어, 파전' : '运河鲤鱼、煎饼卷大葱';
+  static String tour3Step6Title(String l) =>
+      l == 'ko' ? '야시장 바비큐' : '夜市烧烤';
+  static String tour3Step6Desc(String l) =>
+      l == 'ko' ? '고성 야시장 바비큐와 석류주' : '古城夜市烧烤配石榴酒';
+
   static String tourDuration(String l) =>
       l == 'ko' ? '소요 시간' : '预计耗时';
   static String tourTransport(String l) =>

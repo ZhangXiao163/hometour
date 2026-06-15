@@ -125,6 +125,18 @@ class _HeroSection extends StatelessWidget {
             ),
           ),
 
+          // 真实图片背景层（叠加在渐变之上，增加纹理质感）
+          Positioned.fill(
+            child: Opacity(
+              opacity: 0.35,
+              child: Image.asset(
+                'assets/img2.jpg',
+                fit: BoxFit.cover,
+                errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+              ),
+            ),
+          ),
+
           // 粉色光晕 (28% 36%)
           Positioned(
             top: 80,
@@ -161,20 +173,15 @@ class _HeroSection extends StatelessWidget {
             ),
           ),
 
-          // 牡丹花形光斑（完整层级匹配设计稿）
+          // 简化 peony 光斑 — 大圆替代原来复杂的非对称形状
           Positioned(
-            left: -38,
-            top: 76,
+            left: -50,
+            top: 60,
             child: Container(
-              width: 210,
-              height: 210,
+              width: 220,
+              height: 220,
               decoration: BoxDecoration(
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(101),
-                  topRight: Radius.circular(109),
-                  bottomLeft: Radius.circular(92),
-                  bottomRight: Radius.circular(118),
-                ),
+                shape: BoxShape.circle,
                 boxShadow: const [
                   BoxShadow(
                     color: Color(0x474A0F28),
@@ -182,102 +189,15 @@ class _HeroSection extends StatelessWidget {
                     offset: Offset(0, 22),
                   ),
                 ],
-              ),
-              child: Stack(
-                children: [
-                  // 底层：深粉红
-                  Positioned.fill(
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(101),
-                          topRight: Radius.circular(109),
-                          bottomLeft: Radius.circular(92),
-                          bottomRight: Radius.circular(118),
-                        ),
-                        color: Color(0xFFA8325D),
-                      ),
-                    ),
-                  ),
-                  // 黄色中心光斑 (50% 50%, 12%)
-                  Center(
-                    child: Container(
-                      width: 50,
-                      height: 50,
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        gradient: RadialGradient(
-                          colors: [Color(0xFFFFD77A), Color(0x00FFD77A)],
-                          stops: [0.12, 0.13],
-                        ),
-                      ),
-                    ),
-                  ),
-                  // 粉色光斑 (36% 34%, 20%)
-                  Positioned(
-                    left: 55,
-                    top: 50,
-                    child: Container(
-                      width: 84,
-                      height: 84,
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        gradient: RadialGradient(
-                          colors: [Color(0xFFFFD8E6), Color(0x00FFD8E6)],
-                          stops: [0.20, 0.21],
-                        ),
-                      ),
-                    ),
-                  ),
-                  // 中粉色光斑 (64% 32%, 22%)
-                  Positioned(
-                    right: 40,
-                    top: 38,
-                    child: Container(
-                      width: 92,
-                      height: 92,
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        gradient: RadialGradient(
-                          colors: [Color(0xFFF5A4C0), Color(0x00F5A4C0)],
-                          stops: [0.22, 0.23],
-                        ),
-                      ),
-                    ),
-                  ),
-                  // 深粉色光斑 (36% 66%, 22%)
-                  Positioned(
-                    left: 55,
-                    bottom: 40,
-                    child: Container(
-                      width: 92,
-                      height: 92,
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        gradient: RadialGradient(
-                          colors: [Color(0xFFE26992), Color(0x00E26992)],
-                          stops: [0.22, 0.23],
-                        ),
-                      ),
-                    ),
-                  ),
-                  // 最深粉色光斑 (64% 66%, 22%)
-                  Positioned(
-                    right: 40,
-                    bottom: 40,
-                    child: Container(
-                      width: 92,
-                      height: 92,
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        gradient: RadialGradient(
-                          colors: [Color(0xFFC74873), Color(0x00C74873)],
-                          stops: [0.22, 0.23],
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+                gradient: const RadialGradient(
+                  center: Alignment(0.4, 0.4),
+                  colors: [
+                    Color(0xFFFFD77A),
+                    Color(0x66F5A4C0),
+                    Color(0xFFA8325D),
+                  ],
+                  stops: [0.0, 0.35, 1.0],
+                ),
               ),
             ),
           ),
@@ -388,22 +308,26 @@ class _HeroSection extends StatelessWidget {
 
                     const SizedBox(height: 13),
 
-                    // 标题
-                    Text(
-                      title,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 48,
-                        fontWeight: FontWeight.bold,
-                        height: 1,
+                    // 标题（响应式缩放，防止长文本溢出）
+                    FittedBox(
+                      fit: BoxFit.scaleDown,
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        title,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 48,
+                          fontWeight: FontWeight.bold,
+                          height: 1,
+                        ),
                       ),
                     ),
 
                     const SizedBox(height: 8),
 
-                    // 副标题
-                    SizedBox(
-                      width: 290,
+                    // 副标题（自适应宽度）
+                    ConstrainedBox(
+                      constraints: const BoxConstraints(maxWidth: 320),
                       child: Text(
                         subtitle,
                         style: TextStyle(
@@ -577,10 +501,10 @@ class _TabBarSection extends StatelessWidget {
                       WidgetStateProperty.all(Colors.transparent),
                   splashFactory: NoSplash.splashFactory,
                   tabs: [
-                    _TabItem(icon: '⌂', label: _t('tab.home')),
-                    _TabItem(icon: '⌖', label: _t('tab.spots')),
-                    _TabItem(icon: '◌', label: _t('tab.food')),
-                    _TabItem(icon: '↝', label: _t('tab.route')),
+                    _TabItem(icon: Icons.home_rounded, label: _t('tab.home')),
+                    _TabItem(icon: Icons.place_rounded, label: _t('tab.spots')),
+                    _TabItem(icon: Icons.restaurant_rounded, label: _t('tab.food')),
+                    _TabItem(icon: Icons.map_rounded, label: _t('tab.route')),
                   ],
                   onTap: (_) {},
                 ),
@@ -595,7 +519,7 @@ class _TabBarSection extends StatelessWidget {
 
 /// 单个 Tab 项
 class _TabItem extends StatelessWidget {
-  final String icon;
+  final IconData icon;
   final String label;
   const _TabItem({required this.icon, required this.label});
 
@@ -607,9 +531,9 @@ class _TabItem extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
+            Icon(
               icon,
-              style: const TextStyle(fontSize: 19, height: 1),
+              size: 20,
             ),
             const SizedBox(height: 4),
             Text(
@@ -748,12 +672,21 @@ class _TouristSpotsTab extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       child: Column(
         children: [
-          // 景点画廊
+          // 景点画廊 — gold/brown 古建风格
           GallerySection(
             mainLabel: _t('spots_gallery.main'),
             mainSubLabel: _t('spots_gallery.sub'),
             sideTopLabel: _t('spots_gallery.side_top'),
             sideBottomLabel: _t('spots_gallery.side_bottom'),
+            mainOverlayStart: AppColors.photoCityStart,
+            mainOverlayMid: AppColors.photoCityMid,
+            mainOverlayEnd: AppColors.photoCityEnd,
+            sideTopStart: AppColors.photoCityStart,
+            sideTopMid: AppColors.photoCityMid,
+            sideTopEnd: AppColors.photoCityEnd,
+            sideBottomStart: AppColors.photoCityStart,
+            sideBottomMid: AppColors.photoCityMid,
+            sideBottomEnd: AppColors.photoCityEnd,
           ),
           const SizedBox(height: 14),
 
@@ -774,7 +707,7 @@ class _TouristSpotsTab extends StatelessWidget {
                 final index = city.spots.indexOf(spot);
                 return Padding(
                   padding: EdgeInsets.only(top: index == 0 ? 0 : 12),
-                  child: _SpotCard(spot: spot, index: index),
+                  child: _SpotCard(spot: spot),
                 );
               }).toList(),
             ),
@@ -807,13 +740,12 @@ class _TouristSpotsTab extends StatelessWidget {
 /// 景点卡片 — 水平布局（缩略图 + 文字），匹配设计稿 .spot-card
 class _SpotCard extends StatelessWidget {
   final TouristSpot spot;
-  final int index;
-  const _SpotCard({required this.spot, required this.index});
+  const _SpotCard({required this.spot});
 
   @override
   Widget build(BuildContext context) {
-    // 根据索引选择不同的缩略图渐变（对应设计稿的 .thumb-peony / .thumb-city / .thumb-river）
-    final thumbGradient = _thumbGradients[index % _thumbGradients.length];
+    // 根据景点类型选择对应的缩略图渐变
+    final thumbGradient = _thumbGradients[spot.thumbStyle.index];
 
     return Container(
       padding: const EdgeInsets.all(10),
@@ -964,7 +896,7 @@ class _LightSpot {
 }
 
 const _thumbGradients = [
-  // peony style
+  // peony style — 牡丹赏花
   _ThumbGradient(
     colors: [Color(0xFFF2CCDC), Color(0xFF963356), Color(0xFF356F56)],
     stops: [0.0, 0.58, 1.0],
@@ -981,14 +913,19 @@ const _thumbGradients = [
       ),
     ],
   ),
-  // city style
+  // history style — 历史人文
   _ThumbGradient(
     colors: [Color(0xFFDFBD78), Color(0xFF8F563E), Color(0xFF344F4A)],
     stops: [0.0, 0.52, 1.0],
   ),
-  // river style
+  // nature style — 自然生态
   _ThumbGradient(
     colors: [Color(0xFFDCECE8), Color(0xFF5A97A6), Color(0xFFD0B468)],
+    stops: [0.0, 0.52, 1.0],
+  ),
+  // culture style — 文化体验（暖紫灰调）
+  _ThumbGradient(
+    colors: [Color(0xFFE8DCE4), Color(0xFF8F6D82), Color(0xFF4A6070)],
     stops: [0.0, 0.52, 1.0],
   ),
 ];
@@ -1035,12 +972,21 @@ class _FoodTab extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       child: Column(
         children: [
-          // 美食画廊
+          // 美食画廊 — warm amber 美食暖色调
           GallerySection(
             mainLabel: _t('food_gallery.main'),
             mainSubLabel: _t('food_gallery.sub'),
             sideTopLabel: _t('food_gallery.side_top'),
             sideBottomLabel: _t('food_gallery.side_bottom'),
+            mainOverlayStart: const Color(0xFFDFBD78),
+            mainOverlayMid: const Color(0xFFA45C30),
+            mainOverlayEnd: const Color(0xFF5D3528),
+            sideTopStart: const Color(0xFFDFBD78),
+            sideTopMid: const Color(0xFFA45C30),
+            sideTopEnd: const Color(0xFF5D3528),
+            sideBottomStart: const Color(0xFFDFBD78),
+            sideBottomMid: const Color(0xFFA45C30),
+            sideBottomEnd: const Color(0xFF5D3528),
           ),
           const SizedBox(height: 14),
 
@@ -1142,13 +1088,10 @@ class _FoodCard extends StatelessWidget {
               ],
             ),
             child: Center(
-              child: Text(
-                markStyle.emoji,
-                style: const TextStyle(
-                  fontSize: 26,
-                  fontWeight: FontWeight.w900,
-                  color: Colors.white,
-                ),
+              child: Icon(
+                markStyle.icon,
+                color: Colors.white,
+                size: 28,
               ),
             ),
           ),
@@ -1200,17 +1143,17 @@ class _FoodCard extends StatelessWidget {
 /// 菜品图标样式
 class _DishMarkStyle {
   final List<Color> colors;
-  final String emoji;
-  const _DishMarkStyle({required this.colors, required this.emoji});
+  final IconData icon;
+  const _DishMarkStyle({required this.colors, required this.icon});
 }
 
 const _dishMarkStyles = [
-  _DishMarkStyle(colors: [Color(0xFFD6A94F), Color(0xFFA45C30)], emoji: '汤'),
-  _DishMarkStyle(colors: [Color(0xFFE1BA70), Color(0xFF8F563E)], emoji: '饼'),
-  _DishMarkStyle(colors: [Color(0xFFB83D62), Color(0xFF673848)], emoji: '酱'),
-  _DishMarkStyle(colors: [Color(0xFFD6A94F), Color(0xFFA45C30)], emoji: '肉'),
-  _DishMarkStyle(colors: [Color(0xFF5A97A6), Color(0xFF3B6B7A)], emoji: '面'),
-  _DishMarkStyle(colors: [Color(0xFF8F563E), Color(0xFF5D3528)], emoji: '卤'),
+  _DishMarkStyle(colors: [Color(0xFFD6A94F), Color(0xFFA45C30)], icon: Icons.soup_kitchen_rounded),
+  _DishMarkStyle(colors: [Color(0xFFE1BA70), Color(0xFF8F563E)], icon: Icons.bakery_dining_rounded),
+  _DishMarkStyle(colors: [Color(0xFFB83D62), Color(0xFF673848)], icon: Icons.set_meal_rounded),
+  _DishMarkStyle(colors: [Color(0xFFD6A94F), Color(0xFFA45C30)], icon: Icons.kebab_dining_rounded),
+  _DishMarkStyle(colors: [Color(0xFF5A97A6), Color(0xFF3B6B7A)], icon: Icons.ramen_dining_rounded),
+  _DishMarkStyle(colors: [Color(0xFF8F563E), Color(0xFF5D3528)], icon: Icons.local_fire_department_rounded),
 ];
 
 /// 风味标签
