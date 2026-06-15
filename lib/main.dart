@@ -3,6 +3,8 @@ import 'package:hometrour/zaozhuang/ZaoZhuang.dart';
 import 'package:hometrour/zaozhuang/animations.dart';
 import 'package:hometrour/zaozhuang/i18n.dart';
 
+import 'pages/chongqing_travel_page.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -51,55 +53,54 @@ class CityData {
 
 // ── 根据语言返回城市列表 ──────────────────────────────────────────
 List<CityData> _buildCities(String l) => [
-      CityData(
-        id: 1,
-        name: I18n.cityNameZaozhuang(l),
-        score: '4.9',
-        desc: I18n.cityDescZaozhuang(l),
-        tags: [
-          l == 'ko' ? '타이얼좡' : '台儿庄',
-          l == 'ko' ? '웨이산호' : '微山湖',
-        ],
-        image: 'img1.jpg',
-        detail: I18n.cityDetailZaozhuang(l),
-      ),
-      CityData(
-        id: 2,
-        name: I18n.cityNameShanghai(l),
-        score: '4.8',
-        desc: I18n.cityDescShanghai(l),
-        tags: [
-          l == 'ko' ? '와이탄' : '外滩',
-          l == 'ko' ? '난징루' : '南京路',
-        ],
-        image: 'img2.jpg',
-        detail: I18n.cityDetailShanghai(l),
-      ),
-      CityData(
-        id: 3,
-        name: I18n.cityNameChengdu(l),
-        score: '4.7',
-        desc: I18n.cityDescChengdu(l),
-        tags: [
-          l == 'ko' ? '판다' : '大熊猫',
-          l == 'ko' ? '콴자이샹쯔' : '宽窄巷子',
-        ],
-        image: 'img3.jpg',
-        detail: I18n.cityDetailChengdu(l),
-      ),
-      CityData(
-        id: 4,
-        name: I18n.cityNameXian(l),
-        score: '4.9',
-        desc: I18n.cityDescXian(l),
-        tags: [
-          l == 'ko' ? '대안탑' : '大雁塔',
-          l == 'ko' ? '병마용' : '兵马俑',
-        ],
-        image: 'img4.jpg',
-        detail: I18n.cityDetailXian(l),
-      ),
-    ];
+  CityData(
+    id: 1,
+    name: I18n.cityNameZaozhuang(l),
+    score: '4.9',
+    desc: I18n.cityDescZaozhuang(l),
+    tags: [l == 'ko' ? '타이얼좡' : '台儿庄', l == 'ko' ? '웨이산호' : '微山湖'],
+    image: 'assets/img1.jpg',
+    detail: I18n.cityDetailZaozhuang(l),
+  ),
+  CityData(
+    id: 2,
+    name: I18n.cityNameShanghai(l),
+    score: '4.8',
+    desc: I18n.cityDescShanghai(l),
+    tags: [l == 'ko' ? '와이탄' : '外滩', l == 'ko' ? '난징루' : '南京路'],
+    image: 'assets/img2.jpg',
+    detail: I18n.cityDetailShanghai(l),
+  ),
+  CityData(
+    id: 3,
+    name: I18n.cityNameChengdu(l),
+    score: '4.7',
+    desc: I18n.cityDescChengdu(l),
+    tags: [l == 'ko' ? '판다' : '大熊猫', l == 'ko' ? '콴자이샹쯔' : '宽窄巷子'],
+    image: 'assets/img3.jpg',
+    detail: I18n.cityDetailChengdu(l),
+  ),
+  CityData(
+    id: 4,
+    name: I18n.cityNameXian(l),
+    score: '4.9',
+    desc: I18n.cityDescXian(l),
+    tags: [l == 'ko' ? '대안탑' : '大雁塔', l == 'ko' ? '병마용' : '兵马俑'],
+    image: 'assets/img4.jpg',
+    detail: I18n.cityDetailXian(l),
+  ),
+  CityData(
+    id: 5,
+    name: l == 'ko' ? '충칭' : '重庆',
+    score: '4.9',
+    desc: l == 'ko' ? '산성 강도시 8D 여행' : '山城江城 8D魔幻旅行',
+    tags: [l == 'ko' ? '홍야동' : '洪崖洞', l == 'ko' ? '장강 케이블카' : '长江索道'],
+    image: 'assets/chongqing/hongya_hero.png',
+    detail: l == 'ko'
+        ? '충칭 여행 2급 화면으로 이동해 명소, 맛집, 추천 코스를 확인합니다.'
+        : '进入重庆家乡旅游二级界面，查看景点、美食和推荐路线。',
+  ),
+];
 
 // ── 主页 ────────────────────────────────────────────────────────
 class TravelHomePage extends StatelessWidget {
@@ -147,12 +148,8 @@ class TravelHomePage extends StatelessWidget {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               border: Border.all(color: const Color(0xFFE6A800), width: 2),
-              image: const DecorationImage(
-                image: NetworkImage(
-                    'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=60'),
-                fit: BoxFit.cover,
-              ),
             ),
+            child: const Icon(Icons.person, color: Color(0xFF7A6A2A), size: 22),
           ),
           const SizedBox(width: 14),
           // 搜索框
@@ -173,13 +170,18 @@ class TravelHomePage extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Row(
                 children: [
-                  const Icon(Icons.search_rounded,
-                      color: Color(0xFFB0B0B0), size: 20),
+                  const Icon(
+                    Icons.search_rounded,
+                    color: Color(0xFFB0B0B0),
+                    size: 20,
+                  ),
                   const SizedBox(width: 8),
                   Text(
                     I18n.searchHint(locale),
                     style: const TextStyle(
-                        color: Color(0xFFB0B0B0), fontSize: 13),
+                      color: Color(0xFFB0B0B0),
+                      fontSize: 13,
+                    ),
                   ),
                 ],
               ),
@@ -264,8 +266,11 @@ class TravelHomePage extends StatelessWidget {
               ),
               borderRadius: BorderRadius.circular(16),
             ),
-            child: const Icon(Icons.explore_rounded,
-                color: Color(0xFFE6A800), size: 34),
+            child: const Icon(
+              Icons.explore_rounded,
+              color: Color(0xFFE6A800),
+              size: 34,
+            ),
           ),
         ],
       ),
@@ -289,8 +294,7 @@ class TravelHomePage extends StatelessWidget {
         itemBuilder: (context, index) {
           return StaggeredEntrance(
             index: index,
-            child:
-                _buildCityCard(context, cities[index]),
+            child: _buildCityCard(context, cities[index]),
           );
         },
       ),
@@ -305,6 +309,11 @@ class TravelHomePage extends StatelessWidget {
           Navigator.push(
             context,
             SlideUpRoute(page: ZaoZhuang(locale: locale)),
+          );
+        } else if (city.id == 5) {
+          Navigator.push(
+            context,
+            SlideUpRoute(page: const ChongqingTravelPage()),
           );
         }
       },
@@ -346,8 +355,7 @@ class TravelHomePage extends StatelessWidget {
               top: 12,
               left: 12,
               child: Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(10),
@@ -355,8 +363,11 @@ class TravelHomePage extends StatelessWidget {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Icon(Icons.star_rounded,
-                        color: Color(0xFFFFB300), size: 14),
+                    const Icon(
+                      Icons.star_rounded,
+                      color: Color(0xFFFFB300),
+                      size: 14,
+                    ),
                     const SizedBox(width: 3),
                     Text(
                       city.score,
@@ -394,35 +405,44 @@ class TravelHomePage extends StatelessWidget {
                     Text(
                       city.desc,
                       style: const TextStyle(
-                          color: Color(0xFFE0E0E0), fontSize: 12),
+                        color: Color(0xFFE0E0E0),
+                        fontSize: 12,
+                      ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
                     const SizedBox(height: 10),
                     Row(
                       children: [
-                        ...city.tags.map((tag) => Padding(
-                              padding: const EdgeInsets.only(right: 6),
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 8, vertical: 3),
-                                decoration: BoxDecoration(
-                                  color: Colors.white.withOpacity(0.18),
-                                  borderRadius: BorderRadius.circular(6),
-                                ),
-                                child: Text(
-                                  tag,
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                        ...city.tags.map(
+                          (tag) => Padding(
+                            padding: const EdgeInsets.only(right: 6),
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 8,
+                                vertical: 3,
+                              ),
+                              decoration: BoxDecoration(
+                                color: Colors.white.withOpacity(0.18),
+                                borderRadius: BorderRadius.circular(6),
+                              ),
+                              child: Text(
+                                tag,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.w500,
                                 ),
                               ),
-                            )),
+                            ),
+                          ),
+                        ),
                         const Spacer(),
-                        const Icon(Icons.arrow_forward_rounded,
-                            color: Colors.white, size: 16),
+                        const Icon(
+                          Icons.arrow_forward_rounded,
+                          color: Colors.white,
+                          size: 16,
+                        ),
                       ],
                     ),
                   ],
@@ -453,8 +473,7 @@ class TravelHomePage extends StatelessWidget {
           const SizedBox(height: 4),
           Text(
             I18n.exploreSub(locale),
-            style:
-                const TextStyle(fontSize: 13, color: Color(0xFF909090)),
+            style: const TextStyle(fontSize: 13, color: Color(0xFF909090)),
           ),
           const SizedBox(height: 18),
           Row(
@@ -485,14 +504,18 @@ class TravelHomePage extends StatelessWidget {
                 const Color(0xFF3CBD6E),
               ),
             ],
-          )
+          ),
         ],
       ),
     );
   }
 
   Widget _buildCategoryItem(
-      IconData icon, String label, Color bgColor, Color iconColor) {
+    IconData icon,
+    String label,
+    Color bgColor,
+    Color iconColor,
+  ) {
     return Column(
       children: [
         Container(
