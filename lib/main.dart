@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:hometrour/pages/city_detail_page.dart';
 import 'package:hometrour/zaozhuang/ZaoZhuang.dart';
 import 'package:hometrour/zaozhuang/animations.dart';
 import 'package:hometrour/zaozhuang/i18n.dart';
+import 'package:hometrour/services/l10n.dart';
+
+import 'models/city_data.dart';
 
 void main() {
   runApp(const MyApp());
@@ -305,6 +309,15 @@ class TravelHomePage extends StatelessWidget {
           Navigator.push(
             context,
             SlideUpRoute(page: ZaoZhuang(locale: locale)),
+          );
+        }else   if (city.id == 2) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => const LanguageWrapper(
+                child: CityDetailPage(city: hezeCity),
+              ),
+            ),
           );
         }
       },
