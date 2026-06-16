@@ -55,6 +55,9 @@ class GallerySection extends StatelessWidget {
   final Color? sideBottomStart;
   final Color? sideBottomMid;
   final Color? sideBottomEnd;
+  final String? mainImage;
+  final String? sideTopImage;
+  final String? sideBottomImage;
 
   const GallerySection({
     super.key,
@@ -71,6 +74,9 @@ class GallerySection extends StatelessWidget {
     this.sideBottomStart,
     this.sideBottomMid,
     this.sideBottomEnd,
+    this.mainImage,
+    this.sideTopImage,
+    this.sideBottomImage,
   });
 
   @override
@@ -87,6 +93,7 @@ class GallerySection extends StatelessWidget {
               overlayStart: mainOverlayStart ?? AppColors.photoMainStart,
               overlayMid: mainOverlayMid ?? AppColors.photoMainMid,
               overlayEnd: mainOverlayEnd ?? AppColors.photoMainEnd,
+              imagePath: mainImage,
             ),
           ),
           const SizedBox(width: 10),
@@ -101,6 +108,7 @@ class GallerySection extends StatelessWidget {
                     startColor: sideTopStart,
                     midColor: sideTopMid,
                     endColor: sideTopEnd,
+                    imagePath: sideTopImage,
                   ),
                 ),
                 const SizedBox(height: 10),
@@ -111,6 +119,7 @@ class GallerySection extends StatelessWidget {
                     startColor: sideBottomStart,
                     midColor: sideBottomMid,
                     endColor: sideBottomEnd,
+                    imagePath: sideBottomImage,
                   ),
                 ),
               ],
@@ -129,6 +138,7 @@ class _MainPhoto extends StatelessWidget {
   final Color overlayStart;
   final Color overlayMid;
   final Color overlayEnd;
+  final String? imagePath;
 
   const _MainPhoto({
     required this.label,
@@ -136,6 +146,7 @@ class _MainPhoto extends StatelessWidget {
     required this.overlayStart,
     required this.overlayMid,
     required this.overlayEnd,
+    this.imagePath,
   });
 
   @override
@@ -160,6 +171,18 @@ class _MainPhoto extends StatelessWidget {
         ),
         child: Stack(
           children: [
+            // 真实图片背景（叠加在渐变之上）
+            if (imagePath != null)
+              Positioned.fill(
+                child: Opacity(
+                  opacity: 0.55,
+                  child: Image.asset(
+                    imagePath!,
+                    fit: BoxFit.cover,
+                    errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+                  ),
+                ),
+              ),
             // 光斑1 — 粉色光晕
             Positioned(
               left: -20,
@@ -274,6 +297,7 @@ class _SidePhoto extends StatelessWidget {
   final Color? startColor;
   final Color? midColor;
   final Color? endColor;
+  final String? imagePath;
 
   const _SidePhoto({
     required this.label,
@@ -281,6 +305,7 @@ class _SidePhoto extends StatelessWidget {
     this.startColor,
     this.midColor,
     this.endColor,
+    this.imagePath,
   });
 
   @override
@@ -304,6 +329,18 @@ class _SidePhoto extends StatelessWidget {
         ),
         child: Stack(
           children: [
+            // 真实图片背景
+            if (imagePath != null)
+              Positioned.fill(
+                child: Opacity(
+                  opacity: 0.55,
+                  child: Image.asset(
+                    imagePath!,
+                    fit: BoxFit.cover,
+                    errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+                  ),
+                ),
+              ),
             // 顶部光效
             Positioned.fill(
               child: Container(

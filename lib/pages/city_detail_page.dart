@@ -52,298 +52,305 @@ class _CityDetailPageState extends State<CityDetailPage>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFFBF7EF),
-      body: Column(
-        children: [
-          // Hero 区域
-          _HeroSection(
-            city: widget.city,
-            title: LanguageProvider.of(context).t(_titleKeys[_activeIndex]),
-            subtitle:
-                LanguageProvider.of(context).t(_subtitleKeys[_activeIndex]),
-            onBack: () => Navigator.pop(context),
-          ),
-
-          // Tab 栏（悬浮，覆盖 hero 底部）
-          _TabBarSection(controller: _tabController),
-
-          // 内容区
-          Expanded(
-            child: TabBarView(
-              controller: _tabController,
-              children: [
-                _HometownIntroTab(city: widget.city),
-                _TouristSpotsTab(city: widget.city),
-                _FoodTab(city: widget.city),
-                TravelRouteContent(city: widget.city),
-              ],
+      body: NestedScrollView(
+        floatHeaderSlivers: true,
+        headerSliverBuilder: (context, innerBoxIsScrolled) => [
+          SliverAppBar(
+            expandedHeight: 400,
+            toolbarHeight: 56,
+            pinned: true,
+            automaticallyImplyLeading: false,
+            backgroundColor: const Color(0xFFFBF7EF),
+            elevation: 0,
+            leading: Padding(
+              padding: const EdgeInsets.only(left: 6, top: 8),
+              child: _FrostedButton(
+                child: const Text(
+                  '‹',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+                onTap: () => Navigator.pop(context),
+              ),
             ),
+            actions: [
+              Padding(
+                padding: const EdgeInsets.only(right: 12, top: 8),
+                child: _FrostedButton(
+                  width: null,
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 12, vertical: 0),
+                  onTap: () {
+                    final lang = LanguageProvider.of(context);
+                    final next = lang.current == AppLanguage.zh
+                        ? AppLanguage.ko
+                        : AppLanguage.zh;
+                    lang.setLanguage(next);
+                  },
+                  child: Builder(
+                    builder: (ctx) {
+                      final lang = LanguageProvider.of(context);
+                      return Text(
+                        lang.currentLabel,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w900,
+                          letterSpacing: 0.2,
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ),
+            ],
+            flexibleSpace: FlexibleSpaceBar(
+              background: _HeroBackground(
+                city: widget.city,
+                title:
+                    LanguageProvider.of(context).t(_titleKeys[_activeIndex]),
+                subtitle: LanguageProvider.of(context)
+                    .t(_subtitleKeys[_activeIndex]),
+              ),
+            ),
+            bottom: _FrostedTabBar(controller: _tabController),
           ),
         ],
+        body: TabBarView(
+          controller: _tabController,
+          children: [
+            _HometownIntroTab(city: widget.city),
+            _TouristSpotsTab(city: widget.city),
+            _FoodTab(city: widget.city),
+            TravelRouteContent(city: widget.city),
+          ],
+        ),
       ),
     );
   }
 }
 
 // ══════════════════════════════════════════════════════════════════════
-// Hero 区域 — 增强版（匹配设计稿的复杂光效）
+// Hero 背景（SliverAppBar flexibleSpace 中使用）
 // ══════════════════════════════════════════════════════════════════════
 
-class _HeroSection extends StatelessWidget {
+class _HeroBackground extends StatelessWidget {
   final CityData city;
   final String title;
   final String subtitle;
-  final VoidCallback onBack;
 
-  const _HeroSection({
+  const _HeroBackground({
     required this.city,
     required this.title,
     required this.subtitle,
-    required this.onBack,
   });
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 330,
-      child: Stack(
-        children: [
-          // 背景渐变层
-          Positioned.fill(
-            child: Container(
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    Color(0xFFB84066),
-                    Color(0xFF6F2948),
-                    Color(0xFF2D5D56),
-                  ],
-                  stops: [0.0, 0.48, 1.0],
+    return Stack(
+      children: [
+        // 背景渐变层
+        Positioned.fill(
+          child: Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Color(0xFFB84066),
+                  Color(0xFF6F2948),
+                  Color(0xFF2D5D56),
+                ],
+                stops: [0.0, 0.48, 1.0],
+              ),
+            ),
+          ),
+        ),
+
+        // 真实图片背景层（叠加在渐变之上，增加纹理质感）
+        Positioned.fill(
+          child: Opacity(
+            opacity: 0.35,
+            child: Image.asset(
+              'assets/img2.jpg',
+              fit: BoxFit.cover,
+              errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+            ),
+          ),
+        ),
+
+        // 粉色光晕 (28% 36%)
+        Positioned(
+          top: 80,
+          left: 40,
+          child: Container(
+            width: 180,
+            height: 180,
+            decoration: const BoxDecoration(
+              shape: BoxShape.circle,
+              gradient: RadialGradient(
+                center: Alignment(0.28, 0.36),
+                colors: [Color(0xE6FFCCDE), Colors.transparent],
+                stops: [0.08, 0.26],
+              ),
+            ),
+          ),
+        ),
+
+        // 黄色光晕 (66% 28%)
+        Positioned(
+          top: 60,
+          right: 30,
+          child: Container(
+            width: 160,
+            height: 160,
+            decoration: const BoxDecoration(
+              shape: BoxShape.circle,
+              gradient: RadialGradient(
+                center: Alignment(0.66, 0.28),
+                colors: [Color(0xCCFFEA9A), Colors.transparent],
+                stops: [0.04, 0.18],
+              ),
+            ),
+          ),
+        ),
+
+        // 简化 peony 光斑 — 大圆替代原来复杂的非对称形状
+        Positioned(
+          left: -50,
+          top: 60,
+          child: Container(
+            width: 220,
+            height: 220,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              boxShadow: const [
+                BoxShadow(
+                  color: Color(0x474A0F28),
+                  blurRadius: 28,
+                  offset: Offset(0, 22),
                 ),
+              ],
+              gradient: const RadialGradient(
+                center: Alignment(0.4, 0.4),
+                colors: [
+                  Color(0xFFFFD77A),
+                  Color(0x66F5A4C0),
+                  Color(0xFFA8325D),
+                ],
+                stops: [0.0, 0.35, 1.0],
               ),
             ),
           ),
+        ),
 
-          // 真实图片背景层（叠加在渐变之上，增加纹理质感）
-          Positioned.fill(
-            child: Opacity(
-              opacity: 0.35,
-              child: Image.asset(
-                'assets/img2.jpg',
-                fit: BoxFit.cover,
-                errorBuilder: (_, __, ___) => const SizedBox.shrink(),
-              ),
-            ),
-          ),
-
-          // 粉色光晕 (28% 36%)
-          Positioned(
-            top: 80,
-            left: 40,
+        // 底部河流光带
+        Positioned(
+          right: -54,
+          bottom: 22,
+          child: Transform.rotate(
+            angle: -0.157, // -9deg
             child: Container(
-              width: 180,
-              height: 180,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                gradient: RadialGradient(
-                  center: Alignment(0.28, 0.36),
-                  colors: [Color(0xE6FFCCDE), Colors.transparent],
-                  stops: [0.08, 0.26],
-                ),
-              ),
-            ),
-          ),
-
-          // 黄色光晕 (66% 28%)
-          Positioned(
-            top: 60,
-            right: 30,
-            child: Container(
-              width: 160,
-              height: 160,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                gradient: RadialGradient(
-                  center: Alignment(0.66, 0.28),
-                  colors: [Color(0xCCFFEA9A), Colors.transparent],
-                  stops: [0.04, 0.18],
-                ),
-              ),
-            ),
-          ),
-
-          // 简化 peony 光斑 — 大圆替代原来复杂的非对称形状
-          Positioned(
-            left: -50,
-            top: 60,
-            child: Container(
-              width: 220,
-              height: 220,
+              width: 270,
+              height: 78,
               decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                boxShadow: const [
-                  BoxShadow(
-                    color: Color(0x474A0F28),
-                    blurRadius: 28,
-                    offset: Offset(0, 22),
+                borderRadius: BorderRadius.circular(999),
+                gradient: const LinearGradient(
+                  colors: [
+                    Color(0x2EFFFFFF),
+                    Color(0x94FFFFFF),
+                    Color(0x1FFFFFFF),
+                  ],
+                ),
+                color: const Color(0xFF477F98),
+              ),
+            ),
+          ),
+        ),
+
+        // 底部深色渐变遮罩（加高以匹配 taller hero）
+        Positioned(
+          left: 0,
+          right: 0,
+          bottom: 0,
+          height: 160,
+          child: Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Colors.transparent,
+                  Color(0xC2171B1A),
+                ],
+              ),
+            ),
+          ),
+        ),
+
+        // 文字内容（省份标签 + 标题 + 副标题），底部留空给 Tab 栏
+        Positioned(
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 100,
+          child: SafeArea(
+            child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // 空出顶部按钮区域
+                  const SizedBox(height: 48),
+
+                  const Spacer(),
+
+                  // 省份标签
+                  _ProvinceTag(
+                    label: _c(context, '${city.province} · ${city.name}'),
+                  ),
+
+                  const SizedBox(height: 13),
+
+                  // 标题（响应式缩放，防止长文本溢出）
+                  FittedBox(
+                    fit: BoxFit.scaleDown,
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      title,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 48,
+                        fontWeight: FontWeight.bold,
+                        height: 1,
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(height: 8),
+
+                  // 副标题（自适应宽度）
+                  ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 320),
+                    child: Text(
+                      subtitle,
+                      style: TextStyle(
+                        color: Colors.white.withValues(alpha: 0.88),
+                        fontSize: 14,
+                        height: 1.7,
+                      ),
+                    ),
                   ),
                 ],
-                gradient: const RadialGradient(
-                  center: Alignment(0.4, 0.4),
-                  colors: [
-                    Color(0xFFFFD77A),
-                    Color(0x66F5A4C0),
-                    Color(0xFFA8325D),
-                  ],
-                  stops: [0.0, 0.35, 1.0],
-                ),
               ),
             ),
           ),
-
-          // 底部河流光带
-          Positioned(
-            right: -54,
-            bottom: 22,
-            child: Transform.rotate(
-              angle: -0.157, // -9deg
-              child: Container(
-                width: 270,
-                height: 78,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(999),
-                  gradient: const LinearGradient(
-                    colors: [
-                      Color(0x2EFFFFFF),
-                      Color(0x94FFFFFF),
-                      Color(0x1FFFFFFF),
-                    ],
-                  ),
-                  color: const Color(0xFF477F98),
-                ),
-              ),
-            ),
-          ),
-
-          // 底部深色渐变遮罩
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 0,
-            height: 120,
-            child: Container(
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Colors.transparent,
-                    Color(0xC2171B1A),
-                  ],
-                ),
-              ),
-            ),
-          ),
-
-          // 内容
-          Positioned.fill(
-            child: SafeArea(
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // 顶部栏
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        _FrostedButton(
-                          child: const Text(
-                            '‹',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w900,
-                            ),
-                          ),
-                          onTap: onBack,
-                        ),
-                        _FrostedButton(
-                          width: null,
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 12, vertical: 0),
-                          onTap: () {
-                            final lang = LanguageProvider.of(context);
-                            final next = lang.current == AppLanguage.zh
-                                ? AppLanguage.ko
-                                : AppLanguage.zh;
-                            lang.setLanguage(next);
-                          },
-                          child: Builder(
-                            builder: (ctx) {
-                              final lang = LanguageProvider.of(context);
-                              return Text(
-                                lang.currentLabel,
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w900,
-                                  letterSpacing: 0.2,
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-
-                    const Spacer(),
-
-                    // 省份标签
-                    _ProvinceTag(
-                      label: _c(context, '${city.province} · ${city.name}'),
-                    ),
-
-                    const SizedBox(height: 13),
-
-                    // 标题（响应式缩放，防止长文本溢出）
-                    FittedBox(
-                      fit: BoxFit.scaleDown,
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        title,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 48,
-                          fontWeight: FontWeight.bold,
-                          height: 1,
-                        ),
-                      ),
-                    ),
-
-                    const SizedBox(height: 8),
-
-                    // 副标题（自适应宽度）
-                    ConstrainedBox(
-                      constraints: const BoxConstraints(maxWidth: 320),
-                      child: Text(
-                        subtitle,
-                        style: TextStyle(
-                          color: Colors.white.withValues(alpha: 0.88),
-                          fontSize: 14,
-                          height: 1.7,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
@@ -435,86 +442,78 @@ class _ProvinceTag extends StatelessWidget {
 }
 
 // ══════════════════════════════════════════════════════════════════════
-// Tab 栏（悬浮卡片）—— 匹配设计稿 active 状态
+// Tab 栏（用于 SliverAppBar.bottom，匹配设计稿 active 状态）
 // ══════════════════════════════════════════════════════════════════════
 
-class _TabBarSection extends StatelessWidget {
+class _FrostedTabBar extends StatelessWidget implements PreferredSizeWidget {
   final TabController controller;
-  const _TabBarSection({required this.controller});
+  const _FrostedTabBar({required this.controller});
 
   @override
   Widget build(BuildContext context) {
     final _t = LanguageProvider.of(context).t;
-    return Container(
-      margin: const EdgeInsets.only(top: 0),
-      child: Transform.translate(
-        offset: const Offset(0, -28),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(22),
-            child: BackdropFilter(
-              filter: ui.ImageFilter.blur(sigmaX: 18, sigmaY: 18),
-              child: Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.92),
-                  borderRadius: BorderRadius.circular(22),
-                  border:
-                      Border.all(color: Colors.white.withValues(alpha: 0.8)),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Color(0x244D3D2B),
-                      blurRadius: 34,
-                      offset: Offset(0, 18),
-                    ),
-                  ],
-                ),
-                child: TabBar(
-                  controller: controller,
-                  // Active 状态：红色渐变背景 + 阴影（匹配设计稿 .tab.active）
-                  indicator: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16),
-                    gradient: const LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [
-                        Color(0xFFB83D62), // peony
-                        Color(0xFF812A48), // peonyDeep
-                      ],
-                    ),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Color(0x47B83D62),
-                        blurRadius: 18,
-                        offset: Offset(0, 10),
-                      ),
-                    ],
-                  ),
-                  indicatorSize: TabBarIndicatorSize.tab,
-                  dividerColor: Colors.transparent,
-                  labelColor: Colors.white,
-                  unselectedLabelColor: const Color(0xFF7D807B),
-                  labelPadding: const EdgeInsets.symmetric(horizontal: 2),
-                  indicatorPadding: const EdgeInsets.all(2),
-                  overlayColor:
-                      WidgetStateProperty.all(Colors.transparent),
-                  splashFactory: NoSplash.splashFactory,
-                  tabs: [
-                    _TabItem(icon: Icons.home_rounded, label: _t('tab.home')),
-                    _TabItem(icon: Icons.place_rounded, label: _t('tab.spots')),
-                    _TabItem(icon: Icons.restaurant_rounded, label: _t('tab.food')),
-                    _TabItem(icon: Icons.map_rounded, label: _t('tab.route')),
-                  ],
-                  onTap: (_) {},
-                ),
+    return ClipRRect(
+      borderRadius: const BorderRadius.vertical(top: Radius.circular(22)),
+      child: BackdropFilter(
+        filter: ui.ImageFilter.blur(sigmaX: 18, sigmaY: 18),
+        child: Container(
+          padding: const EdgeInsets.all(8),
+          margin: const EdgeInsets.only(bottom: 4),
+          decoration: BoxDecoration(
+            color: Colors.white.withValues(alpha: 0.92),
+            border: Border.all(color: Colors.white.withValues(alpha: 0.8)),
+            boxShadow: const [
+              BoxShadow(
+                color: Color(0x244D3D2B),
+                blurRadius: 34,
+                offset: Offset(0, 18),
               ),
+            ],
+          ),
+          child: TabBar(
+            controller: controller,
+            indicator: BoxDecoration(
+              borderRadius: BorderRadius.circular(16),
+              gradient: const LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Color(0xFFB83D62),
+                  Color(0xFF812A48),
+                ],
+              ),
+              boxShadow: const [
+                BoxShadow(
+                  color: Color(0x47B83D62),
+                  blurRadius: 18,
+                  offset: Offset(0, 10),
+                ),
+              ],
             ),
+            indicatorSize: TabBarIndicatorSize.tab,
+            dividerColor: Colors.transparent,
+            labelColor: Colors.white,
+            unselectedLabelColor: const Color(0xFF7D807B),
+            labelPadding: const EdgeInsets.symmetric(horizontal: 2),
+            indicatorPadding: const EdgeInsets.all(2),
+            overlayColor: WidgetStateProperty.all(Colors.transparent),
+            splashFactory: NoSplash.splashFactory,
+            tabs: [
+              _TabItem(icon: Icons.home_rounded, label: _t('tab.home')),
+              _TabItem(icon: Icons.place_rounded, label: _t('tab.spots')),
+              _TabItem(
+                  icon: Icons.restaurant_rounded, label: _t('tab.food')),
+              _TabItem(icon: Icons.map_rounded, label: _t('tab.route')),
+            ],
+            onTap: (_) {},
           ),
         ),
       ),
     );
   }
+
+  @override
+  Size get preferredSize => const Size.fromHeight(90);
 }
 
 /// 单个 Tab 项
@@ -572,6 +571,9 @@ class _HometownIntroTab extends StatelessWidget {
             mainSubLabel: _t('home_gallery.sub'),
             sideTopLabel: _t('home_gallery.side_top'),
             sideBottomLabel: _t('home_gallery.side_bottom'),
+            mainImage: 'assets/img1.jpg',
+            sideTopImage: 'assets/gucheng.jpg',
+            sideBottomImage: 'assets/weishanhu.jpg',
           ),
           const SizedBox(height: 14),
 
@@ -649,6 +651,67 @@ class _HometownIntroTab extends StatelessWidget {
               },
             ]),
           ),
+          const SizedBox(height: 14),
+
+          // 城市底蕴
+          SectionCard(
+            title: _t('home_heritage.title'),
+            tag: _t('home_heritage.tag'),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  _c(context, city.detail),
+                  style: const TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w500,
+                    color: Color(0xFF555E59),
+                    height: 1.82,
+                  ),
+                ),
+                const SizedBox(height: 14),
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: city.tags
+                      .map((tag) => Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 11, vertical: 8),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFFF0EAE1),
+                              borderRadius: BorderRadius.circular(999),
+                              border: Border.all(
+                                  color: const Color(0x29B83D62)),
+                            ),
+                            child: Text(
+                              _c(context, tag),
+                              style: const TextStyle(
+                                color: Color(0xFF6B5E3D),
+                                fontSize: 12,
+                                fontWeight: FontWeight.w900,
+                              ),
+                            ),
+                          ))
+                      .toList(),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 14),
+
+          // 旅行贴士
+          SectionCard(
+            title: _t('home_tips.title'),
+            tag: _t('home_tips.tag'),
+            child: InfoGrid(
+              items: city.tips
+                  .map((t) => {
+                        'title': _c(context, t['title']!),
+                        'content': _c(context, t['content']!),
+                      })
+                  .toList(),
+            ),
+          ),
 
           const SizedBox(height: 10),
         ],
@@ -687,6 +750,9 @@ class _TouristSpotsTab extends StatelessWidget {
             sideBottomStart: AppColors.photoCityStart,
             sideBottomMid: AppColors.photoCityMid,
             sideBottomEnd: AppColors.photoCityEnd,
+            mainImage: 'assets/img1.jpg',
+            sideTopImage: 'assets/gucheng.jpg',
+            sideBottomImage: 'assets/hehua.jpg',
           ),
           const SizedBox(height: 14),
 
@@ -781,6 +847,18 @@ class _SpotCard extends StatelessWidget {
                 ),
                 child: Stack(
                   children: [
+                    // 真实图片
+                    if (spot.image != null)
+                      Positioned.fill(
+                        child: Opacity(
+                          opacity: 0.55,
+                          child: Image.asset(
+                            spot.image!,
+                            fit: BoxFit.cover,
+                            errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+                          ),
+                        ),
+                      ),
                     // 光斑
                     ...thumbGradient.lightSpots.map(
                       (spot) => Positioned(
@@ -987,6 +1065,9 @@ class _FoodTab extends StatelessWidget {
             sideBottomStart: const Color(0xFFDFBD78),
             sideBottomMid: const Color(0xFFA45C30),
             sideBottomEnd: const Color(0xFF5D3528),
+            mainImage: 'assets/yangroutang.jpg',
+            sideTopImage: 'assets/shaobing.jpg',
+            sideBottomImage: 'assets/xiaochi.jpg',
           ),
           const SizedBox(height: 14),
 

@@ -78,6 +78,9 @@ class _TravelRouteContentState extends State<TravelRouteContent> {
             sideBottomStart: AppColors.photoRiverStart,
             sideBottomMid: AppColors.photoRiverMid,
             sideBottomEnd: AppColors.photoRiverEnd,
+            mainImage: 'assets/img1.jpg',
+            sideTopImage: 'assets/gucheng.jpg',
+            sideBottomImage: 'assets/weishanhu.jpg',
           ),
           const SizedBox(height: 14),
 

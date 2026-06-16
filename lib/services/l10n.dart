@@ -190,6 +190,10 @@ final Map<AppLanguage, Map<String, String>> _translations = {
     'home_tip1.content': '春季看牡丹，秋季适合城市慢游和家乡风物路线。',
     'home_tip2.title': '页面重点',
     'home_tip2.content': '先展示城市印象，再自然进入景点、美食、路线三个页面。',
+    'home_heritage.title': '城市底蕴',
+    'home_heritage.tag': 'CULTURE',
+    'home_tips.title': '旅行贴士',
+    'home_tips.tag': 'TIPS',
 
     // ── 景点 Tab 内容 ──
     'spots_gallery.main': '曹州牡丹园',
@@ -332,6 +336,10 @@ final Map<AppLanguage, Map<String, String>> _translations = {
     'home_tip1.content': '봄에는 모란을 감상하고, 가을에는 도시 여유 여행과 고향 풍물 코스가 적합합니다.',
     'home_tip2.title': '페이지 포인트',
     'home_tip2.content': '먼저 도시 인상을 보여주고, 자연스럽게 명소, 음식, 코스 세 페이지로 진입합니다.',
+    'home_heritage.title': '도시 유산',
+    'home_heritage.tag': 'CULTURE',
+    'home_tips.title': '여행 팁',
+    'home_tips.tag': 'TIPS',
 
     'spots_gallery.main': '차오저우 모란원',
     'spots_gallery.sub': '봄철 필수 관람',
