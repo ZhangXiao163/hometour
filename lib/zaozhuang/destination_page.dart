@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hometrour/zaozhuang/animations.dart';
 import 'package:hometrour/zaozhuang/i18n.dart';
-import 'package:video_player/video_player.dart';
 
 // ── 数据模型 ────────────────────────────────────────────────────────
 
@@ -156,7 +155,7 @@ const guanfangConfig = DestinationConfig(
   tipTitle: const L10nString(zh: '💡 行程小贴士', ko: '💡 여행 팁'),
   tipContent: const L10nString(zh: '台儿庄古城夜景最佳观赏时间为 19:00–21:30，建议傍晚入城，白天游览微山湖，合理安排行程。',
       ko: '타이얼좡 고성 야경은 19:00–21:30 사이에 가장 아름답습니다. 저녁 무렵에 입성하여 낮에는 웨이산호를 관광하는 일정을 추천합니다.'),
-  videoUrl: 'assets/zaozhuang.mp4',
+  videoUrl: 'assets/zaozhuang.jpg',
   videoFromAsset: true,
 );
 
@@ -232,7 +231,7 @@ const guchengConfig = DestinationConfig(
   tipTitle: const L10nString(zh: '💡 演出与住宿贴士', ko: '💡 공연 & 숙박 팁'),
   tipContent: const L10nString(zh: '古城内的"火龙钢花（打铁花）"和"运河大鼓"等非遗表演通常在傍晚 19:30 左右达到高潮。强烈建议在古城内的客栈留宿一晚（凭客栈房卡通常可在服务中心办理二次入园手续），不仅省去往返奔波，还能在清晨体验到没有喧嚣、静谧如画的古城原貌。',
       ko: '고성 내 "화룡강화(타철화)"와 "운하 대북" 등 무형문화재 공연은 보통 저녁 19:30경에 절정에 달합니다. 고성 내 객잔에서 1박하는 것을 강력히 추천합니다(객잔 룸키로 서비스 센터에서 재입장 수속 가능). 왕복 이동을 줄일 뿐만 아니라, 이른 아침 고요하고 그림 같은 고성의 원래 모습을 체험할 수 있습니다.'),
-  videoUrl: 'assets/taierzhuang.mp4',
+  videoUrl: 'assets/gucheng.jpg',
   videoFromAsset: true,
 );
 
@@ -574,9 +573,33 @@ class DestinationPage extends StatelessWidget {
                   _buildArticleTitle(),
                   const SizedBox(height: 20),
                   if (config.videoUrl != null) ...[
-                    _VideoPlayerWidget(
-                      url: config.videoUrl!,
-                      fromAsset: config.videoFromAsset,
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(14),
+                      child: config.videoFromAsset
+                          ? Image.asset(
+                              config.videoUrl!,
+                              fit: BoxFit.cover,
+                              errorBuilder: (_, __, ___) => Container(
+                                height: 200,
+                                color: const Color(0xFFF0F0F0),
+                                child: const Center(
+                                  child: Icon(Icons.broken_image_rounded,
+                                      color: Color(0xFFCCCCCC), size: 40),
+                                ),
+                              ),
+                            )
+                          : Image.network(
+                              config.videoUrl!,
+                              fit: BoxFit.cover,
+                              errorBuilder: (_, __, ___) => Container(
+                                height: 200,
+                                color: const Color(0xFFF0F0F0),
+                                child: const Center(
+                                  child: Icon(Icons.broken_image_rounded,
+                                      color: Color(0xFFCCCCCC), size: 40),
+                                ),
+                              ),
+                            ),
                     ),
                     const SizedBox(height: 24),
                   ],
@@ -965,122 +988,5 @@ class _PhotoCard extends StatelessWidget {
         ],
       ),
     );
-  }
-}
-
-// ── 视频播放器组件 ─────────────────────────────────────────────────
-class _VideoPlayerWidget extends StatefulWidget {
-  final String url;
-  final bool fromAsset;
-  const _VideoPlayerWidget({required this.url, this.fromAsset = false});
-
-  @override
-  State<_VideoPlayerWidget> createState() => _VideoPlayerWidgetState();
-}
-
-class _VideoPlayerWidgetState extends State<_VideoPlayerWidget> {
-  late final VideoPlayerController _controller;
-  bool _isInitialized = false;
-  bool _isPlaying = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = widget.fromAsset
-        ? VideoPlayerController.asset(widget.url)
-        : VideoPlayerController.networkUrl(Uri.parse(widget.url));
-    _controller.initialize().then((_) {
-      if (mounted) {
-        setState(() => _isInitialized = true);
-        _controller.setLooping(true);
-        _controller.play(); // 自动播放
-      }
-    });
-    _controller.addListener(() {
-      if (mounted) {
-        setState(() => _isPlaying = _controller.value.isPlaying);
-      }
-    });
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  void _togglePlay() {
-    if (_isPlaying) {
-      _controller.pause();
-    } else {
-      _controller.play();
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(14),
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          if (_isInitialized)
-            AspectRatio(
-              aspectRatio: _controller.value.aspectRatio,
-              child: VideoPlayer(_controller),
-            )
-          else
-            const AspectRatio(
-              aspectRatio: 16 / 9,
-              child: ShimmerBox(),
-            ),
-          if (_isInitialized)
-            GestureDetector(
-              onTap: _togglePlay,
-              child: AnimatedContainer(
-                duration: const Duration(milliseconds: 200),
-                width: 56,
-                height: 56,
-                decoration: BoxDecoration(
-                  color: _isPlaying
-                      ? Colors.transparent
-                      : Colors.black.withOpacity(0.4),
-                  shape: BoxShape.circle,
-                ),
-                child: _isPlaying
-                    ? const SizedBox.shrink()
-                    : const Icon(Icons.play_arrow_rounded,
-                        size: 36, color: Colors.white),
-              ),
-            ),
-          if (_isInitialized && _isPlaying)
-            Positioned(
-              bottom: 8,
-              right: 12,
-              child: Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.5),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Text(
-                  _formatDuration(_controller.value.position),
-                  style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 10,
-                      fontWeight: FontWeight.w600),
-                ),
-              ),
-            ),
-        ],
-      ),
-    );
-  }
-
-  String _formatDuration(Duration d) {
-    final mm = d.inMinutes.remainder(60).toString().padLeft(2, '0');
-    final ss = d.inSeconds.remainder(60).toString().padLeft(2, '0');
-    return '$mm:$ss';
   }
 }
